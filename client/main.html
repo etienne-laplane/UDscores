@@ -1,0 +1,72 @@
+<head>
+  <title>UDCclassement</title>
+
+</head>
+
+<body>
+  <script src="js/three.min.js"></script>
+  {{> udcClassement}}
+</body>
+
+<template name="udcClassement">
+
+  <div id="classement">
+    <div class="header"><h1>Classement</h1></div>
+    <div id="players">
+      {{#each players}}
+        {{> player}}
+      {{/each}}
+    </div>
+  </div>
+
+  {{> addPlayerForm }}
+  {{> updatePlayerForm }}
+  {{> substractPlayerForm }}
+  {{> reset }}
+</template>
+
+<template name="player">
+  <div class="player mix" id="{{_id}}" data-score="{{score}}">
+    <div class="player-name">{{name}}</div>
+    <div class="score-total">{{score}}</div>
+    <div class="score-to-add">{{name}} +{{tmpPoints}}</div>
+  </div>
+</template>
+
+<template name="addPlayerForm">
+  <div class="form">
+    <h2>Ajouter un joueur</h2>
+    <input type="text" placeholder="Pseudo" {{b "value: name" }}/>
+    <input type="text" placeholder="Score" {{b "value: score" }}/>
+    <button {{b "click: addPlayer" }}>Valider</button>
+  </div>
+</template>
+
+<template name="updatePlayerForm">
+  <div class="form">
+    <h2>Ajouter des points</h2>
+    {{#each players}}
+      <h3>{{name}}</h3>
+      <input type="text" class="player-points" data-id="{{_id}}" placeholder="Points ajoutés"/>
+    {{/each}}
+    <button {{b "click: updatePlayers" }}>Valider</button>
+  </div>
+</template>
+
+<template name="substractPlayerForm">
+  <div class="form">
+    <h2>Soustraire des points</h2>
+    <select {{b "options: players, optionsValue: _id, optionsText: name, value: selected, defaultText: 'Selectionner un joueur', defaultValue: '0'"}}></select>
+
+    <input type="text" placeholder="Points soustrait" {{b "value: tmpPoints" }}/>
+    <button {{b "click: substractPlayer" }}>Valider</button>
+  </div>
+</template>
+
+<template name="reset">
+  <div class="form">
+    <h2>Supprimer tous les joueurs</h2>
+    <button {{b "click: reset" }} class="danger">Suppression</button>
+  </div>
+</template>
+
